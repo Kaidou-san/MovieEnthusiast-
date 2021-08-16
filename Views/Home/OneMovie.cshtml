@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-6">
+        <h1>@ViewBag.OneMovie.Title (@ViewBag.OneMovie.Rating)</h1>
+        <h1>@ViewBag.OneMovie.ReleaseDate</h1>
+        <h3>Categories:</h3>
+        <ul>
+            @foreach(var c in @ViewBag.OneMovie.CatsOfMovie)
+            {
+                <li>@c.CategoryOfMovie.CategoryName</li>
+            }
+        </ul>
+        <hr>
+        <h4>Add a Category to a movie!</h4>
+        <form action="/addCatToMovie" method="post">
+            <select name="CategoryId" class="form-control">                
+                @foreach(Category c in ViewBag.AllCats)
+                {
+                    <option value="@c.CategoryId">@c.CategoryName</option>
+                }
+            </select>
+            <input type="hidden" name="MovieId" value="@ViewBag.OneMovie.MovieId">
+            <input type="submit" value="Add Category" class="btn btn-primary">
+        </form>
+    </div>
+    <div class="col-6">
+        
+    </div>
+</div>

@@ -1,0 +1,59 @@
+@model User
+<h1>Welcome @Model.Name!</h1>
+<a href="logout">Logout</a>
+
+<table class="table table-striped">
+    <tr>
+        <th>Title</th>
+        <th>Release Date</th>
+        <th>Rating</th>
+        <th>Like</th>
+    </tr>
+    @{
+        foreach (Movie m in ViewBag.AllMovies)
+        {
+            <tr>
+                <td><a href="/movie/@m.MovieId">@m.Title</a></td>
+                <td>@m.ReleaseDate</td>
+                <td>@m.Rating</td>
+                <td>@{
+                    if(Model.MoviesILike.Any(a => a.MovieId == m.MovieId))
+                    {
+                        <a href="/unlike/@Model.UserId/@m.MovieId"><img src="~/images/fullheart.png" alt="Liked"/></a>
+                    }else{
+                        <a href="/like/@Model.UserId/@m.MovieId"><img src="~/images/emptyheart.png" alt="Not Liked"/></a>
+                    }
+                    }
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+<hr>
+<h1>Movies I Like!</h1>
+<table class="table table-striped">
+    <tr>
+        <th>Title</th>
+        <th>Release Date</th>
+        <th>Rating</th>
+        <th>Like</th>
+    </tr>
+    @{
+        foreach(var m in Model.MoviesILike)
+        {
+            <tr>
+                <td><a href="/movie/@m.MovieId">@m.MovieLiked.Title</a></td>
+                <td>@m.MovieLiked.ReleaseDate</td>
+                <td>@m.MovieLiked.Rating</td>
+                <td><a href="/unlike/@Model.UserId/@m.MovieLiked.MovieId"><img src="~/images/fullheart.png" alt="Liked"/></a></td>
+            </tr>
+        }
+    }
+</table>
+
+<h4>Add a Category to a the Database!</h4>
+<form action="addCatToDb" method="post">
+    <input type="text" name="CategoryName" class="form-control">
+    <input type="submit" value="Add" class="btn btn-primary">
+</form>
